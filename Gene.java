@@ -45,8 +45,7 @@ public class Gene
 
     private Integer setEnd(int sIndex, int fIndex, Integer myEnd)
     {
-        int end = sequence.length();
-        if (fIndex < end && fIndex > sIndex && (fIndex-sIndex) % 3 == 0)
+        if ((fIndex-sIndex) % 3 == 0)
         {
             return Integer.valueOf(fIndex);
         }

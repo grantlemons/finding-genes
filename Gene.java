@@ -23,9 +23,9 @@ public class Gene
                     int finalIndex2 = sequence.indexOf("TGA", startIndex);
                     Integer myEnd = null;
 
-                    myEnd = setEnd(startIndex, finalIndex0, myEnd, sequence.length());
-                    myEnd = setEnd(startIndex, finalIndex1, myEnd, sequence.length());
-                    myEnd = setEnd(startIndex, finalIndex2, myEnd, sequence.length());
+                    myEnd = setEnd(startIndex, finalIndex0, myEnd);
+                    myEnd = setEnd(startIndex, finalIndex1, myEnd);
+                    myEnd = setEnd(startIndex, finalIndex2, myEnd);
 
                     if (myEnd != null)
                     {
@@ -46,8 +46,9 @@ public class Gene
         }
     }
 
-    private Integer setEnd(int sIndex, int fIndex, Integer myEnd, int end)
+    private Integer setEnd(int sIndex, int fIndex, Integer myEnd)
     {
+        int end = sequence.length();
         if (fIndex < end && fIndex > sIndex && (fIndex-sIndex) % 3 == 0)
         {
             return Integer.valueOf(fIndex);

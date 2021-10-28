@@ -2,7 +2,7 @@ public class Gene
 {    
     public void test()
     {
-        String[] testCases = new String[12];
+        String[] testCases = new String[13];
         testCases[0] = "ATGxxxTAG"; // Normal w/ TAG
         testCases[1] = "ATGxxxTAA"; // Normal w/ TAA
         testCases[2] = "ATGxxxTGA"; // Normal w/ TGA
@@ -15,6 +15,7 @@ public class Gene
         testCases[9] = "ATGxxTAG"; // Incorrect Spacing
         testCases[10] = "ATGxxxTAG   ATGxxxTAA"; // Two seperate genomes
         testCases[11] = "ATGxxxTAG ATGxxxTAA"; // Two seperate genomes w/ spacing not multiple of three
+        testCases[12] = "xxATGxx"; // end - stop % 3 == 0
         
         Gene gene = new Gene();
         
@@ -27,7 +28,7 @@ public class Gene
 
     public void getORF(String sequence)
     {
-        boolean foundORF = false;
+        boolean foundGenome = false;
         int pos = 0;
         while (sequence.length()-1 > pos)
         {
@@ -48,7 +49,7 @@ public class Gene
                 {
                     String subsequence = sequence.substring(startIndex, myEnd+3);
                     System.out.println(startIndex+".."+myEnd+": "+subsequence);
-                    foundORF = true;
+                    foundGenome = true;
                     pos = myEnd;
                 }
                 else
@@ -61,7 +62,7 @@ public class Gene
                 pos = sequence.length();
             }
         }
-        if (!foundORF)
+        if (!foundGenome)
         {
             System.out.println("No genomes found");
         }
@@ -69,19 +70,13 @@ public class Gene
 
     private Integer setEnd(int sIndex, int fIndex, Integer myEnd, String sequence)
     {
-        if (myEnd == null)
+        if (myEnd == null && (fIndex-sIndex) % 3 == 0)
         {
-            if ((fIndex-sIndex) % 3 == 0)
-            {
-                return Integer.valueOf(fIndex);
-            }
+            return Integer.valueOf(fIndex);
         }
-        else
+        else if ((fIndex-sIndex) % 3 == 0 && fIndex < myEnd.intValue())
         {
-            if ( fIndex < myEnd.intValue() && (fIndex-sIndex) % 3 == 0)
-            {
-                return Integer.valueOf(fIndex);
-            }
+            return Integer.valueOf(fIndex);
         }
         return myEnd;
     }

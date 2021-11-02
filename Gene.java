@@ -4,7 +4,6 @@ public class Gene
 {
     public void test()
     {
-        String[] testCases = new String[13];
         getORF("ATGxxxTAG"); // Normal w/ TAG
         getORF("ATGxxxTAA"); // Normal w/ TAA
         getORF("ATGxxxTGA"); // Normal w/ TGA

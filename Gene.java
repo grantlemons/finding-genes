@@ -85,7 +85,6 @@ public class Gene
 
     private Integer setEnd(int sIndex, int fIndex, Integer myEnd, String sequence)
     {
-        boolean yes = ((fIndex-sIndex)+1) % 3 == 0;
         if (fIndex != -1 && ((fIndex-sIndex)) == 0)
         {
             if (myEnd == null)
@@ -100,7 +99,7 @@ public class Gene
         return myEnd;
     }
     
-    public static void main()
+    public static void main(String[] args)
     {
         Gene gene = new Gene();
         gene.getORF(gene.loadFile());

@@ -1,29 +1,45 @@
+import edu.duke.*;
+
 public class Gene
-{    
+{
     public void test()
     {
         String[] testCases = new String[13];
-        testCases[0] = "ATGxxxTAG"; // Normal w/ TAG
-        testCases[1] = "ATGxxxTAA"; // Normal w/ TAA
-        testCases[2] = "ATGxxxTGA"; // Normal w/ TGA
-        testCases[3] = "xxxATGxxxTGA"; // Leading 'x's
-        testCases[4] = "xxxATGxxxTGAxxTAA"; // Extraneous End Codon
-        testCases[5] = "TAG"; // Only End Codon
-        testCases[6] = "ATG"; // Only Start Codon
-        testCases[7] = "xx"; // No Codon
-        testCases[8] = ""; // Empty string
-        testCases[9] = "ATGxxTAG"; // Incorrect Spacing
-        testCases[10] = "ATGxxxTAG   ATGxxxTAA"; // Two seperate genomes
-        testCases[11] = "ATGxxxTAG ATGxxxTAA"; // Two seperate genomes w/ spacing not multiple of three
-        testCases[12] = "xxATGxx"; // end - stop % 3 == 0
-        
-        Gene gene = new Gene();
-        
-        for (int i=0; i < testCases.length; i++)
+        getORF("ATGxxxTAG"); // Normal w/ TAG
+        getORF("ATGxxxTAA"); // Normal w/ TAA
+        getORF("ATGxxxTGA"); // Normal w/ TGA
+        getORF("xxxATGxxxTGA"); // Leading 'x's
+        getORF("xxxATGxxxTGAxxTAA"); // Extraneous End Codon
+        getORF("TAG"); // Only End Codon
+        getORF("ATG"); // Only Start Codon
+        getORF("xx"); // No Codon
+        getORF(""); // Empty string
+        getORF("ATGxxTAG"); // Incorrect Spacing
+        getORF("ATGxxxTAG   ATGxxxTAA"); // Two seperate genomes
+        getORF("ATGxxxTAG ATGxxxTAA"); // Two seperate genomes w/ spacing not multiple of three
+        getORF("xxATGxx"); // end - stop % 3 == 0
+    }
+    
+    public String loadFile()
+    {
+        FileResource fr = new FileResource(); // Open file browser
+        String str = fr.asString();
+    
+        String newstr = "";
+    
+        // Strip any non-letters (specifically to strip white space)
+    
+        for (int i=0; i<str.length(); i++)
+    
         {
-            System.out.println("Test Case "+ i + " ----------- \""+ testCases[i]+"\"");
-            gene.getORF(testCases[i]);
+            if (Character.isLetter(str.charAt(i)))
+            {
+    
+                newstr = newstr + str.charAt(i);
+            }
         }
+    
+        return newstr.toUpperCase(); // Also capitalize the entire string
     }
 
     public void getORF(String sequence)
@@ -48,7 +64,7 @@ public class Gene
                 if (myEnd != null)
                 {
                     String subsequence = sequence.substring(startIndex, myEnd+3);
-                    System.out.println(startIndex+".."+myEnd+": "+subsequence);
+                    System.out.println(startIndex+1+".."+(myEnd+2+1)+": "+subsequence);
                     foundGenome = true;
                     pos = myEnd;
                 }
@@ -70,14 +86,24 @@ public class Gene
 
     private Integer setEnd(int sIndex, int fIndex, Integer myEnd, String sequence)
     {
-        if (myEnd == null && (fIndex-sIndex) % 3 == 0)
+        boolean yes = ((fIndex-sIndex)+1) % 3 == 0;
+        if (fIndex != -1 && ((fIndex-sIndex)) == 0)
         {
-            return Integer.valueOf(fIndex);
-        }
-        else if ((fIndex-sIndex) % 3 == 0 && fIndex < myEnd.intValue())
-        {
-            return Integer.valueOf(fIndex);
+            if (myEnd == null)
+            {
+                return Integer.valueOf(fIndex);
+            }
+            else if (fIndex < myEnd.intValue())
+            {
+                return Integer.valueOf(fIndex);
+            }
         }
         return myEnd;
+    }
+    
+    public static void main()
+    {
+        Gene gene = new Gene();
+        gene.getORF(gene.loadFile());
     }
 }

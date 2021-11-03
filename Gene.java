@@ -50,14 +50,12 @@ public class Gene
 
             if (startIndex >= 0)
             {
-                int finalIndex0 = sequence.indexOf("TAA", startIndex); //! IF ONE IS INVALID WE NEED TO CHECK AGAIN
-                int finalIndex1 = sequence.indexOf("TAG", startIndex);
-                int finalIndex2 = sequence.indexOf("TGA", startIndex);
+                //! IF ONE IS INVALID WE NEED TO CHECK AGAIN
                 Integer myEnd = null;
                 
-                myEnd = setEnd(startIndex, finalIndex0, myEnd, sequence);
-                myEnd = setEnd(startIndex, finalIndex1, myEnd, sequence);
-                myEnd = setEnd(startIndex, finalIndex2, myEnd, sequence);
+                myEnd = setEnd(startIndex, "TAA", myEnd, sequence);
+                myEnd = setEnd(startIndex, "TAG", myEnd, sequence);
+                myEnd = setEnd(startIndex, "TGA", myEnd, sequence);
 
                 if (myEnd != null)
                 {
@@ -82,17 +80,22 @@ public class Gene
         }
     }
 
-    private Integer setEnd(int sIndex, int fIndex, Integer myEnd, String sequence)
+    private Integer setEnd(int sIndex, String searchString, Integer myEnd, String sequence)
     {
-        if (fIndex != -1 && (fIndex-sIndex) % 3 == 0)
+        int fIndex = sIndex;
+        while (fIndex != -1 && fIndex < sequence.length()-2)
         {
-            if (myEnd == null)
+            fIndex = sequence.indexOf(searchString, fIndex+1);
+            if ((fIndex-sIndex) % 3 == 0 && fIndex > -1)
             {
-                return Integer.valueOf(fIndex);
-            }
-            else if (fIndex < myEnd.intValue())
-            {
-                return Integer.valueOf(fIndex);
+                if (myEnd == null)
+                {
+                    return Integer.valueOf(fIndex);
+                }
+                else if (fIndex < myEnd.intValue())
+                {
+                    return Integer.valueOf(fIndex);
+                }
             }
         }
         return myEnd;

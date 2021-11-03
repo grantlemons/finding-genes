@@ -35,7 +35,6 @@ public class Gene
 
             if (startIndex >= 0)
             {
-                //! IF ONE IS INVALID WE NEED TO CHECK AGAIN
                 Integer myEnd = null;
                 
                 myEnd = setEnd(startIndex, "TAA", myEnd, sequence);

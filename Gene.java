@@ -48,7 +48,7 @@ public class Gene
                 {
                     String subsequence = sequence.substring(startIndex, myEnd+3);
                     System.out.println(startIndex+1+".."+(myEnd+2+1)+": "+subsequence);
-                    log.info(startIndex+1+".."+(myEnd+2+1)+": "+subsequence);
+                    //log.info(startIndex+1+".."+(myEnd+2+1)+": "+subsequence);
                     foundGenome = true;
                     pos = myEnd;
                 }

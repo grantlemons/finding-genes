@@ -21,13 +21,12 @@ public class Gene
     
     public String loadFile()
     {
-        FileResource fr = new FileResource(); // Open file browser
+        FileResource fr = new FileResource("sensestrand.txt"); // Open file
         String str = fr.asString();
     
         String newstr = "";
     
         // Strip any non-letters (specifically to strip white space)
-    
         for (int i=0; i<str.length(); i++)
     
         {
@@ -51,7 +50,7 @@ public class Gene
 
             if (startIndex >= 0)
             {
-                int finalIndex0 = sequence.indexOf("TAA", startIndex);
+                int finalIndex0 = sequence.indexOf("TAA", startIndex); //! IF ONE IS INVALID WE NEED TO CHECK AGAIN
                 int finalIndex1 = sequence.indexOf("TAG", startIndex);
                 int finalIndex2 = sequence.indexOf("TGA", startIndex);
                 Integer myEnd = null;
@@ -85,7 +84,7 @@ public class Gene
 
     private Integer setEnd(int sIndex, int fIndex, Integer myEnd, String sequence)
     {
-        if (fIndex != -1 && ((fIndex-sIndex)) == 0)
+        if (fIndex != -1 && (fIndex-sIndex) % 3 == 0)
         {
             if (myEnd == null)
             {

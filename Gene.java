@@ -21,23 +21,8 @@ public class Gene
     
     public String loadFile()
     {
-        FileResource fr = new FileResource("sensestrand.txt"); // Open file
-        String str = fr.asString();
-    
-        String newstr = "";
-    
-        // Strip any non-letters (specifically to strip white space)
-        for (int i=0; i<str.length(); i++)
-    
-        {
-            if (Character.isLetter(str.charAt(i)))
-            {
-    
-                newstr = newstr + str.charAt(i);
-            }
-        }
-    
-        return newstr.toUpperCase(); // Also capitalize the entire string
+        FileResource file = new FileResource("sensestrand.txt");
+        return file.asString().replaceAll("[^a-zA-Z]", "").toUpperCase();
     }
 
     public void getORF(String sequence)

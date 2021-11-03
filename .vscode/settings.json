@@ -1,6 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "apache-csv.jar",
-        "courserajava.jar"
+        "courserajava.jar",
+        "commons-logging-1.2.jar"
     ]
 }

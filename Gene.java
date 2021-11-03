@@ -1,7 +1,10 @@
 import edu.duke.*;
+import org.apache.commons.logging.*;
 
 public class Gene
 {
+    private Log log = LogFactory.getLog(Gene.class);
+
     public void test()
     {
         getORF("ATGxxxTAG"); // Normal w/ TAG
@@ -45,6 +48,7 @@ public class Gene
                 {
                     String subsequence = sequence.substring(startIndex, myEnd+3);
                     System.out.println(startIndex+1+".."+(myEnd+2+1)+": "+subsequence);
+                    log.info(startIndex+1+".."+(myEnd+2+1)+": "+subsequence);
                     foundGenome = true;
                     pos = myEnd;
                 }

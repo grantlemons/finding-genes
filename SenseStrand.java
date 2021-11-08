@@ -1,6 +1,6 @@
 import edu.duke.*;
 
-public class Gene
+public class SenseStrand
 {
     // Test cases to determine if the algorithm does as required
     public void test()
@@ -24,7 +24,7 @@ public class Gene
     // Loads the sense strand file, parses it, and changes to upper case
     public String loadFile()
     {
-        FileResource file = new FileResource("sensestrand.txt");
+        FileResource file = new FileResource();
         
         // Use regex to remove whitespace
         // Change to upper case
@@ -44,20 +44,20 @@ public class Gene
             if (startIndex >= 0)
             {
                 // Finds the first valid stop codon after the start codon
-                int myEnd = 0;
-                myEnd = setEnd(startIndex, "TAA", sequence, myEnd);
-                myEnd = setEnd(startIndex, "TAG", sequence, myEnd);
-                myEnd = setEnd(startIndex, "TGA", sequence, myEnd);
+                int end = 0;
+                end = setEnd(startIndex, "TAA", sequence, end);
+                end = setEnd(startIndex, "TAG", sequence, end);
+                end = setEnd(startIndex, "TGA", sequence, end);
 
-                if (myEnd != 0)
+                if (end != 0)
                 {
-                    String subsequence = sequence.substring(startIndex, myEnd+3);
+                    String subsequence = sequence.substring(startIndex, end+3);
                     
-                    System.out.println(startIndex+1+".."+(myEnd+2+1)+": "+subsequence);
-                    printAntiSense(startIndex, myEnd, subsequence, sequence.length());
+                    System.out.println(startIndex+1+".."+(end+2+1)+": "+subsequence);
+                    printAntiSense(startIndex, end, subsequence, sequence.length());
 
                     foundGenome = true;
-                    pos = myEnd+3;
+                    pos = end+3;
                 }
                 else
                 {
@@ -76,7 +76,7 @@ public class Gene
     }
 
     // Finds the end codon by looping through all possible end codons until a valid one if found
-    private int setEnd(int sIndex, String searchString, String sequence, int myEnd)
+    private int setEnd(int sIndex, String searchString, String sequence, int end)
     {
         int fIndex = sIndex;
         
@@ -86,12 +86,12 @@ public class Gene
             fIndex = sequence.indexOf(searchString, fIndex+1);
             
             // Checks to make sure the end codon is valid
-            if (((fIndex-sIndex) % 3 == 0 && fIndex != -1) && (myEnd == 0 || fIndex < myEnd))
+            if (((fIndex-sIndex) % 3 == 0 && fIndex != -1) && (end == 0 || fIndex < end))
             {
                 return fIndex;
             }
         }
-        return myEnd;
+        return end;
     }
 
     // Method to change a sense strand into antisense strand and print it
@@ -131,7 +131,7 @@ public class Gene
     // Main runnable file to find sense and antisense strands from a file
     public static void main(String[] args)
     {
-        Gene gene = new Gene();
-        gene.getGenome(gene.loadFile());
+        SenseStrand geneSequence = new SenseStrand();
+        geneSequence.getGenome(geneSequence.loadFile());
     }
 }
